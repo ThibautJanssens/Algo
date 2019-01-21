@@ -13,6 +13,6 @@ for(let i = 0; i < n; i++){
 
 let sum;
 for(let k = 0; k < n; k++){
-    sum += numbers[k];    
+    sum += parseInt(numbers[k]);    
 }
 console.log("sum = " + sum);
