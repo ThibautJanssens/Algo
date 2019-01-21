@@ -10,5 +10,5 @@ let min = readlineSync.question("Can you enter a min? ");
 let max = readlineSync.question("Can you enter a max? ");
 let current = readlineSync.question("Can you enter a current? ");
 console.log("min = " + min + " max = " + max + " current = " + current);
-if(min > max)
+if(parseInt(min) > parseInt(max))
     console.error("Min is greater than max");
