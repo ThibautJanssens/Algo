@@ -50,7 +50,7 @@ class Rectangle{
         var botLeftPoint = new Point(this.getTopLeftXPos, this.getTopLeftYPos-this.getWidth);
         var topRightPoint = new Point(this.getTopLeftXPos+this.getLength, this.getTopLeftYPos);
         var botRightPoint = new Point(this.getTopLeftXPos+this.getLength, this.getTopLeftYPos-this.getWidth);
-        this.points = {"topLeftPointA" : topLeftPoint, 
+        this.points = {"topLeftPoint" : topLeftPoint, 
             "topRightPoint" : topRightPoint, 
             "botLeftPoint" : botLeftPoint, 
             "botRightPoint" : botRightPoint};

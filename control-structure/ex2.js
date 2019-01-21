@@ -9,6 +9,14 @@ const readlineSync = require("readline-sync");
 let min = readlineSync.question("Can you enter a min? ");
 let max = readlineSync.question("Can you enter a max? ");
 let current = readlineSync.question("Can you enter a current? ");
+
+min = parseInt(min);
+max = parseInt(max);
+current = parseInt(current);
+
 console.log("min = " + min + " max = " + max + " current = " + current);
-if(parseInt(min) > parseInt(max))
+
+if(min > max)
     console.error("Min is greater than max");
+if(current > min && max > current)
+    console.log("Current number is between max and min.");
