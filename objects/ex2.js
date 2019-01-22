@@ -16,7 +16,7 @@ function askTvSerie(){
     }
     while(answer !== 'quit');
     
-    let dict = {"Name" : [name], "Production Year" : [productionYear], "Cast":[casts]};
+    let dict = {"Name" : name, "Production Year" : productionYear, "Cast":casts};
     createJson(dict);
     
     return dict;

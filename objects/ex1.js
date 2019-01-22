@@ -28,7 +28,7 @@ function askTvSerie(){
 }
 
 function createJson(name, productionYear, casts){
-  let dict = {"Name" : [name], "Production Year" : [productionYear], "Cast":[casts]}; 
+  let dict = {"Name" : name, "Production Year" : productionYear, "Cast":casts}; 
   let tvShow = JSON.stringify(dict);
   fs.writeFile('show.json', tvShow, 'utf8', (err) => {
     if (err) throw err;
