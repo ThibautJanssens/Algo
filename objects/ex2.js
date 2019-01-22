@@ -29,10 +29,6 @@ but in a random order.*/
 function randomizeCast(tvSerie){
     var index, index2, value;
 
-    console.log(tvSerie.Cast);
-    console.log(tvSerie.Cast.length);
-
-    
     for (index = tvSerie.Cast.length - 1; index > 0; index--) {
         index2 = Math.floor(Math.random() * (index + 1));
         value = tvSerie.Cast[index];

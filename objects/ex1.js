@@ -24,11 +24,12 @@ function askTvSerie(){
         i++;
     }
     while(answer !== 'quit');
-    createJson(name, productionYear, casts);
+    let dict = {"Name" : name, "Production Year" : productionYear, "Cast":casts};
+
+    createJson(dict);
 }
 
-function createJson(name, productionYear, casts){
-  let dict = {"Name" : name, "Production Year" : productionYear, "Cast":casts}; 
+function createJson(dict){
   let tvShow = JSON.stringify(dict);
   fs.writeFile('show.json', tvShow, 'utf8', (err) => {
     if (err) throw err;

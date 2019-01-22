@@ -6,5 +6,5 @@ for (let j = 0; j <= 100; j++){
     if(j%2 == 0)
         console.log(j/2);
     else
-        console.log(j/3);
+        console.log(j*3);
 }
