@@ -39,9 +39,10 @@ main();
 function main() {
     try{
         pizzas = loadFile();
+        console.log(pizzas);
     }
     catch{
-        console.log("No file to load.\n\n");
+        console.log("No file to load.\n\n");    
     }
 
     console.log("Hello! Welcome to the Pizza Flavors Manager.");
@@ -69,7 +70,6 @@ function main() {
                 remove();
                 break;
             case 4:
-                console.log("\n\nLIST: " + pizzas);
                 createFile(pizzas);
                 exit();
                 break;
@@ -77,7 +77,7 @@ function main() {
                 console.log("\nError: not a valid option, try again.\n");
                 break;
         }
-    } while(true);
+    } while(userChoice !== 4);
 }
 
 //show all the pizzas
@@ -117,7 +117,7 @@ function remove(oldPizza) {
 //quit de program
 function exit() {
     console.log("See you next time.");
-    process.exit(0);
+    process.exitCode = 0;
 }
 
 //create a new pizza
@@ -126,9 +126,9 @@ function createPizza() {
     //ask for the name, if a pizza has already this name, ask the user again
     do{
         name = readlineSync.question("What name do you want to give to your pizza? ");
-        if(nameTaken())
+        if(nameTaken(name))
             console.log("Name already in use.");
-    }while(nameTaken());
+    }while(nameTaken(name));
     
     let topings = new Array();
     
@@ -151,16 +151,17 @@ function createPizza() {
 //create a JSON file with the list of all pizza;
 function createFile(dict){
     let pizzaList = JSON.stringify(dict);
+    
     fs.writeFile('pizza.json', pizzaList, 'utf8', (err) => {
-      if (err) throw err;
-      console.log('The file has been saved!');
-    });
+        if (err) throw err;
+        console.log('The file has been saved!');
+      });
 }
 
 //read a JSON file to get the pizzas list
 function loadFile(){
     let obj, toRet = new Array();
-    fs.readFile('./pizza.json', 'utf8', function (err, data) {
+    fs.readFile('pizza.json', 'utf8', function (err, data) {
         if (err) throw err;
         obj = JSON.parse(data);
         for(var i in obj){
@@ -174,7 +175,7 @@ function loadFile(){
 // return true if it's the same
 function nameTaken(name){
     for(var i = 0; i < pizzas.length; i++){
-        if ((pizzas[i].getName).localeCompare(name) == 0); 
+        if ((pizzas[i].getName).localeCompare(name) === 0) 
             return true;
     }
     return false;
