@@ -12,68 +12,26 @@ class Rectangle{
         this.topLeftYPos = parseInt(topLeftYPos);
         this.width = parseInt(width);
         this.length = parseInt(length);
-        this.points = {};
-        this.generatePoints();
-    }
-
-    get getTopLeftXPos(){
-        return this.topLeftXPos;
-    }
-
-    get getTopLeftYPos(){
-        return this.topLeftYPos;
-    }
-
-    get getWidth(){
-        return this.width;
-    }
-
-    get getLength(){
-        return this.length;
     }
 
     collides(otherRectangle){
-        if(this.points.topLeftPoint.getX > otherRectangle.points.topRightPoint.getX)
-            return false;
-        else if(this.points.topRightPoint.getX < otherRectangle.points.topLeftPoint.getX)
-            return false;
-        else if(this.points.topLeftPoint.getY < otherRectangle.points.botLeftPoint.getY)
-            return false;
-        else if(this.points.botLeftPoint.getY > otherRectangle.points.topLeftPoint.getY)
-            return false;
-        else 
+        if(this.topLeftXPos < otherRectangle.topLeftXPos + otherRectangle.width &&
+            this.topLeftXPos + this.width > otherRectangle.topLeftXPos &&
+            this.topLeftYPos < otherRectangle.topLeftYPos + otherRectangle.length &&
+            this.length + this.topLeftYPos > otherRectangle.topLeftYPos)
             return true;
-    }
-
-    generatePoints(){
-        var topLeftPoint = new Point(this.getTopLeftXPos, this.getTopLeftYPos);
-        var botLeftPoint = new Point(this.getTopLeftXPos, this.getTopLeftYPos-this.getWidth);
-        var topRightPoint = new Point(this.getTopLeftXPos+this.getLength, this.getTopLeftYPos);
-        var botRightPoint = new Point(this.getTopLeftXPos+this.getLength, this.getTopLeftYPos-this.getWidth);
-        this.points = {"topLeftPoint" : topLeftPoint, 
-            "topRightPoint" : topRightPoint, 
-            "botLeftPoint" : botLeftPoint, 
-            "botRightPoint" : botRightPoint};
+        else
+            return false;
     }
 }
 
-class Point{
-    constructor(x, y){
-        this.x = parseInt(x);
-        this.y = parseInt(y);
-    }
-    get getX(){
-        return this.x;
-    }
-
-    get getY(){
-        return this.y;
-    }
-
-    toString(){
-        console.log("[" + this.getX + ";" + this.getY + "]");
-    }
-}
+module.exports = Rectangle;
 
 //tests
 let rect1 = new Rectangle(6,6,3,2);
+let rect2 = new Rectangle(100,100, 5, 5);
+let rect3 = new Rectangle(5,6,3,2);
+
+console.log("Rect1 vs Rect2: (false)" + rect1.collides(rect2));
+console.log("Rect1 vs Rect3: (true) " + rect1.collides(rect3));
+console.log("Rect2 vs Rect3: (false) " + rect2.collides(rect3));

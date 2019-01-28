@@ -3,6 +3,7 @@ Make a program that asks for an integer n and generates the n first Fibonacci nu
 
 Yes, you'll have to search what the hell are Fibonacci numbers.
 */
+const readlineSync = require("readline-sync");
 
 function fibonacci(n){
     if(n == 0)
@@ -12,4 +13,6 @@ function fibonacci(n){
     return fibonacci(n-1) + n;
 }
 
-console.log(fibonacci(10));
+
+let userChoice = parseInt(readlineSync.question("Choose a number. "));
+console.log(fibonacci(userChoice));

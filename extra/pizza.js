@@ -19,12 +19,12 @@ class Pizza{
 
     toString(){
         let toRet = "Pizza " + this.getName + ":\n { ";
-        topings.forEach(toping => {
-            toRet += toping + ", ";
-        });
+        for(var i = 0; i < this.topings.length; i++){
+            toRet += this.topings[i] + ", ";
+        }
         toRet += "}\n Price: " + this.getPrice + "€";
         return toRet;
     }
 }
 
-module.exports.Pizza
+module.exports = Pizza;

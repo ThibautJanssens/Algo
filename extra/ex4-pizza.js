@@ -29,15 +29,16 @@ we launch the application.
 */
 const Pizza = require("./pizza.js");
 const readlineSync = require("readline-sync");
+const fs = require('fs');
 
-let pizzas = {};
+let pizzas = Array();
 
 main();
 
 //main function of the program
 function main() {
     try{
-        pizzas = loadFie("./pizzas.json");
+        pizzas = loadFile();
     }
     catch{
         console.log("No file to load.\n\n");
@@ -65,10 +66,11 @@ function main() {
                 add(newPizza);
                 break;
             case 3:
-                var oldPizza = choosePizza();
-                remove(oldPizza);
+                remove();
                 break;
             case 4:
+                console.log("\n\nLIST: " + pizzas);
+                createFile(pizzas);
                 exit();
                 break;
             default:
@@ -80,21 +82,36 @@ function main() {
 
 //show all the pizzas
 function list() {
-    pizzas.forEach(pizza => {
-        console.log(pizza.toString + "\n");
-    });
+    //console.log(typeof(pizzas));
+    if(pizzas.length == 0)
+        console.log("There are no pizza at the moment. Please come back later.");
+    else{
+        for(var i = 0; i < pizzas.length; i++){
+            console.log(pizzas[i].toString + '\n');
+        }
+    }    
 }
 
 //add a pizza to the list if not already in it
 function add(newPizza) {
-    //TODO
-    createFile(pizzas);
+    pizzas.push(newPizza);
 }
 
 //remove a pizza from the list, if in it
 function remove(oldPizza) {
-    //TODO
-    createFile(pizzas);
+    let choice = 0;
+
+    for(let i = 0;i < pizzas.length; i++){
+        console.log((i+1) + ":" + pizzas[i].getName + "\n");
+    }
+
+    do{
+        choice = parseInt(readlineSync.question("Which pizza do you choose to remove?\n(Give the number of the pizza)\n"));
+        if(choice > pizzas.length || choice < 1)
+            console.log("Error: write a number in the list.");
+    }while(choice > pizzas.length || choice < 1);
+
+    pizzas.splice(choice-1);
 }
 
 //quit de program
@@ -105,18 +122,30 @@ function exit() {
 
 //create a new pizza
 function createPizza() {
-    let newPizza;
-    //TODO
+    let name, toping, price = 0;
+    //ask for the name, if a pizza has already this name, ask the user again
+    do{
+        name = readlineSync.question("What name do you want to give to your pizza? ");
+        if(nameTaken())
+            console.log("Name already in use.");
+    }while(nameTaken());
     
+    let topings = new Array();
+    
+    //ask the topings to the user, make a array out of it
+    do{
+        toping = readlineSync.question("What toping do you want on your pizza?\n('stop' to quit)\n ")
+        if(toping !== "stop")
+            topings.push(toping);
+    }while(toping !== "stop");
+
+    //ask the price to the user
+    while(price <= 0){
+        price = parseFloat(readlineSync.question("At what price should we sell this pizza?\n(no free pizza sorry)\n"));
+    }  
+    var newPizza = new Pizza(name, topings, price);
+    console.log(newPizza.toString());
     return newPizza;
-}
-
-//let us get a pizza from the list
-function choosePizza(){
-    var pizzaToRet;
-    //TODO
-
-    return pizzaToRet;
 }
 
 //create a JSON file with the list of all pizza;
@@ -129,11 +158,24 @@ function createFile(dict){
 }
 
 //read a JSON file to get the pizzas list
-function loadFie(){
-    var obj;
+function loadFile(){
+    let obj, toRet = new Array();
     fs.readFile('./pizza.json', 'utf8', function (err, data) {
         if (err) throw err;
         obj = JSON.parse(data);
+        for(var i in obj){
+            toRet.push(i, obj[i])
+        } 
     });
-    return obj;
+    return toRet;
+}
+
+//compare the name of pizzas with the name given in parameter
+// return true if it's the same
+function nameTaken(name){
+    for(var i = 0; i < pizzas.length; i++){
+        if ((pizzas[i].getName).localeCompare(name) == 0); 
+            return true;
+    }
+    return false;
 }
