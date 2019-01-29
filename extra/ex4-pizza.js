@@ -37,16 +37,15 @@ main();
 
 //main function of the program
 function main() {
-    try{
+    try {
         pizzas = loadFile();
-        console.log(pizzas);
-    }
-    catch{
-        console.log("No file to load.\n\n");    
+        console.log("pizz" + pizzas);
+    } catch {
+        console.log("No file to load.\n\n");
     }
 
     console.log("Hello! Welcome to the Pizza Flavors Manager.");
-    
+
     do {
         console.log("Please choose your actions:");
         console.log("--------------------------------------------");
@@ -77,19 +76,19 @@ function main() {
                 console.log("\nError: not a valid option, try again.\n");
                 break;
         }
-    } while(userChoice !== 4);
+    } while (userChoice !== 4);
 }
 
 //show all the pizzas
 function list() {
     //console.log(typeof(pizzas));
-    if(pizzas.length == 0)
+    if (pizzas.length == 0)
         console.log("There are no pizza at the moment. Please come back later.");
-    else{
-        for(var i = 0; i < pizzas.length; i++){
-            console.log(pizzas[i].toString + '\n');
+    else {
+        for (var i = 0; i < pizzas.length; i++) {
+            console.log(pizzas[i].show + '\n');
         }
-    }    
+    }
 }
 
 //add a pizza to the list if not already in it
@@ -101,17 +100,17 @@ function add(newPizza) {
 function remove(oldPizza) {
     let choice = 0;
 
-    for(let i = 0;i < pizzas.length; i++){
-        console.log((i+1) + ":" + pizzas[i].getName + "\n");
+    for (let i = 0; i < pizzas.length; i++) {
+        console.log((i + 1) + ":" + pizzas[i].getName + "\n");
     }
 
-    do{
+    do {
         choice = parseInt(readlineSync.question("Which pizza do you choose to remove?\n(Give the number of the pizza)\n"));
-        if(choice > pizzas.length || choice < 1)
+        if (choice > pizzas.length || choice < 1)
             console.log("Error: write a number in the list.");
-    }while(choice > pizzas.length || choice < 1);
+    } while (choice > pizzas.length || choice < 1);
 
-    pizzas.splice(choice-1);
+    pizzas.splice(choice - 1);
 }
 
 //quit de program
@@ -124,58 +123,57 @@ function exit() {
 function createPizza() {
     let name, toping, price = 0;
     //ask for the name, if a pizza has already this name, ask the user again
-    do{
+    do {
         name = readlineSync.question("What name do you want to give to your pizza? ");
-        if(nameTaken(name))
+        if (nameTaken(name))
             console.log("Name already in use.");
-    }while(nameTaken(name));
-    
+    } while (nameTaken(name));
+
     let topings = new Array();
-    
+
     //ask the topings to the user, make a array out of it
-    do{
+    do {
         toping = readlineSync.question("What toping do you want on your pizza?\n('stop' to quit)\n ")
-        if(toping !== "stop")
+        if (toping !== "stop")
             topings.push(toping);
-    }while(toping !== "stop");
+    } while (toping !== "stop");
 
     //ask the price to the user
-    while(price <= 0){
+    while (price <= 0) {
         price = parseFloat(readlineSync.question("At what price should we sell this pizza?\n(no free pizza sorry)\n"));
-    }  
+    }
     var newPizza = new Pizza(name, topings, price);
-    console.log(newPizza.toString());
+
     return newPizza;
 }
 
 //create a JSON file with the list of all pizza;
-function createFile(dict){
+function createFile(dict) {
     let pizzaList = JSON.stringify(dict);
-    
-    fs.writeFile('pizza.json', pizzaList, 'utf8', (err) => {
+
+    fs.writeFileSync('pizza.json', pizzaList, 'utf8', (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
-      });
+    });
 }
 
 //read a JSON file to get the pizzas list
-function loadFile(){
+function loadFile() {
     let obj, toRet = new Array();
-    fs.readFile('pizza.json', 'utf8', function (err, data) {
-        if (err) throw err;
-        obj = JSON.parse(data);
-        for(var i in obj){
-            toRet.push(i, obj[i])
-        } 
-    });
+    obj = JSON.parse(fs.readFileSync('pizza.json', 'utf8'));
+    console.log("obj: " + obj);
+    for (var i = 0; i < obj.length; i++) {
+        toRet.push(obj[i]);
+    }
+    console.log(toRet);
     return toRet;
 }
 
 //compare the name of pizzas with the name given in parameter
 // return true if it's the same
-function nameTaken(name){
-    for(var i = 0; i < pizzas.length; i++){
-        if ((pizzas[i].getName).localeCompare(name) === 0) 
+function nameTaken(name) {
+    for (var i = 0; i < pizzas.length; i++) {
+        if ((pizzas[i].getName).localeCompare(name) === 0)
             return true;
     }
     return false;

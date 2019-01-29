@@ -17,7 +17,7 @@ class Pizza{
         return this.price;
     }
 
-    toString(){
+    show(){
         let toRet = "Pizza " + this.getName + ":\n { ";
         for(var i = 0; i < this.topings.length; i++){
             toRet += this.topings[i] + ", ";
