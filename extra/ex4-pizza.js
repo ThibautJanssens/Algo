@@ -55,14 +55,14 @@ function main() {
         console.log("4 - Exit this program");
         console.log("--------------------------------------------");
 
-        var userChoice = parseInt(readlineSync.question("Enter your action's number: "));
+        let userChoice = parseInt(readlineSync.question("Enter your action's number: "));
 
         switch (userChoice) {
             case 1:
                 list();
                 break;
             case 2:
-                var newPizza = createPizza();
+                let newPizza = createPizza();
                 add(newPizza);
                 break;
             case 3:
@@ -85,7 +85,7 @@ function list() {
     if (pizzas.length == 0)
         console.log("There are no pizza at the moment. Please come back later.");
     else {
-        for (var i = 0; i < pizzas.length; i++) {
+        for (let i = 0; i < pizzas.length; i++) {
             console.log(pizzas[i].show + '\n');
         }
     }
@@ -142,7 +142,7 @@ function createPizza() {
     while (price <= 0) {
         price = parseFloat(readlineSync.question("At what price should we sell this pizza?\n(no free pizza sorry)\n"));
     }
-    var newPizza = new Pizza(name, topings, price);
+    let newPizza = new Pizza(name, topings, price);
 
     return newPizza;
 }
@@ -162,7 +162,7 @@ function loadFile() {
     let obj, toRet = new Array();
     obj = JSON.parse(fs.readFileSync('pizza.json', 'utf8'));
     console.log("obj: " + obj);
-    for (var i = 0; i < obj.length; i++) {
+    for (let i = 0; i < obj.length; i++) {
         toRet.push(obj[i]);
     }
     console.log(toRet);
@@ -172,7 +172,7 @@ function loadFile() {
 //compare the name of pizzas with the name given in parameter
 // return true if it's the same
 function nameTaken(name) {
-    for (var i = 0; i < pizzas.length; i++) {
+    for (let i = 0; i < pizzas.length; i++) {
         if ((pizzas[i].getName).localeCompare(name) === 0)
             return true;
     }
