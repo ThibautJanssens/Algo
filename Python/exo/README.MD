@@ -1,0 +1,1 @@
+Some exercises done from a [workshop](https://github.com/RogerNoel/Python_workshop) to train with Python.

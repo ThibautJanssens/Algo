@@ -1,0 +1,37 @@
+--Serie 1
+CREATE TABLE Météo
+    (`ville` varchar(9), `haut` int, `bas` int)
+;
+    
+INSERT INTO Météo
+    (`ville`, `haut`, `bas`)
+VALUES
+    ('Bruxelles', 27, 13),
+    ('Liège', 25, 15),
+    ('Namur', 26, 15),
+    ('Charleroi', 25, 12),
+    ('Bruges', 28, 16)
+;
+
+--ex1 select les villes
+SELECT ville FROM Météo
+--ex2 toutes les villes et leur température maximum
+SELECT DISTINCT ville, haut FROM Météo
+--ex3 toutes les villes et leur température minimum
+SELECT DISTINCT ville, bas FROM Météo
+--ex4 Là où les villes dont la température maximale dépasse 27 degrés
+SELECT ville FROM Météo WHERE haut > 27
+--ex5 Là où les villes dont la température minimale sera inférieure ou égale à 15 degrés
+SELECT ville FROM Météo WHERE bas <= 15
+--ex6 Là où les villes dont la température minimale sera égale à 15 degrés
+SELECT ville FROM Météo WHERE bas = 15
+--ex7 Là où les villes dont la température minimale ne sera PAS égale à 15 degrés
+SELECT ville FROM Météo WHERE bas != 15
+--ex8 Là où les villes dont le nom commence par "Br"
+SELECT ville FROM Météo WHERE ville LIKE 'Br%'
+--ex9 Là où les villes dont la température maximale se situe entre 26 et 28 degrés
+SELECT ville FROM Météo WHERE haut <= 28 AND haut >= 26
+--ex10 Là où les villes dont la température minimale est égale à 14 ou est égale à 16 degrés
+SELECT ville FROM Météo WHERE bas = 14 OR bas = 16  
+--ex11 Là où les villes dont la température maximale est supérieure ou égale à 26 et la température minimale est inférieure à 14
+SELECT ville FROM Météo WHERE haut >= 26 AND bas < 14
