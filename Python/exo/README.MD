@@ -1,1 +1,2 @@
 Some exercises done from a [workshop](https://github.com/RogerNoel/Python_workshop) to train with Python.
+and some Turtle exercices done while at the [workshop](https://github.com/PaulineRoppe/CoderDojo-Workshop)
